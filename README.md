@@ -1,11 +1,11 @@
 # react-data-binding
 
-Now that `LinkedStateMixin` has been been deprecated, we need a new, more "React-like" way to accomplish two-way
-data-binding in React. Many have argued against two-way data binding; and in fact there are many examples of
-AngularJS-style bindings that JSX has made obsolete (such as ng-repeat or ng-class).
+What do Aurelia, VueJS, and Angular have in common? All 3 are modern frameworks that support two-way data binding.
+Of course, ReactJS famously omits this feature, and I believe their excuse goes something along the lines of,
+"Flux is better." Except it isn't. React developers usually find themselves repeating the work of writing change
+handlers, a hold-over from Backbone and jQuery. 
 
-However, most React programmers will eventually find themselves writing change handlers to an absurd extent; eventually,
-we will have to admit to ourselves that what we are doing amounts to two-way data binding anyway.
-
-In order to avoid re-inventing the wheel like this, we might as well abstract a couple of common methods that can
-do the work for us. **react-data-binding** is an example of one way to accomplish this.
+Write enough of these and you will eventually realize that what you are doing amounts to implementing your own
+version of two-way data binding. Why re-invent the wheel this way when `onChange` and `value`, the two attributes we
+use to bind state to our forms, can be abstracted into a couple of simple functions? **react-data-binding** is an
+example of one way to accomplish this.
