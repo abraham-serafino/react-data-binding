@@ -11,11 +11,11 @@ class Reservation extends Component {
     };
 
     this.summary = this.summary.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.getChangeHandler = this.getChangeHandler.bind(this);
   }
 
-  handleChange(model, value) {
-    switch (model) {
+  handleChange(key, value) {
+    switch (key) {
       case 'isGoing':
         if (!value) {
           this.setState({ numberOfGuests: 0 });

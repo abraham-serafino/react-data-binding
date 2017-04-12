@@ -1,18 +1,19 @@
 function bindModel(context) {
-  return function(model) {
+  return function(key) {
+    const originalValue = context.state[key];
+
     return {
-      value: context.state[model],
-      checked: context.state[model],
+      value: originalValue,
+      checked: originalValue,
 
       onChange(event) {
-        const originalValue = context.state[model];
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
 
-        context.setState({ [model]: value });
+        context.setState({ [key]: value });
 
         if (typeof context.handleChange === 'function') {
-          context.handleChange(model, value, originalValue);
+          context.handleChange(key, value, originalValue);
         }
       }
     };

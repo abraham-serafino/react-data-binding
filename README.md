@@ -118,11 +118,10 @@ function bindModel(context) {
       checked: context.state[key],
 
       onChange(event) {
-          if (event.target.getAttribute('type') === 'checkbox') {
-            context.setState({ key: event.target.checked });
-          } else {
-            context.setState({ key: event.target.value });
-          }
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+
+        context.setState({ key: value });
       }
     };
   }
@@ -158,14 +157,13 @@ function bindModel(context) {
       checked: context.state[key],
 
       onChange(event) {
-        if (event.target.getAttribute('type') === 'checkbox') {
-          context.setState({ key: event.target.checked });
-        } else {
-          context.setState({ key: event.target.value });
-        }
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
 
+        context.setState({ key: value });
+  
         if (typeof context.handleChange === 'function') {
-          context.handleChange(key);
+          context.handleChange(key, value);
         }
       }
     };
