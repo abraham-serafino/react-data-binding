@@ -11,7 +11,7 @@ class Reservation extends Component {
     };
 
     this.summary = this.summary.bind(this);
-    this.getChangeHandler = this.getChangeHandler.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(key, value) {
