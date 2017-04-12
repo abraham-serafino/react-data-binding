@@ -29,11 +29,13 @@ function bindModel(context) {
 
     arrayItem(pathToArray, index, arrayElementSubPath) {
       const stateArray = get(context.state, pathToArray, null) || [];
-      const value = arrayElementSubPath ? get(stateArray[index], arrayElementSubPath, null) : stateArray[index];
+      const value = arrayElementSubPath ?
+                      get(stateArray[index], arrayElementSubPath, '') :
+                        stateArray[index];
 
       return {
-        value,
-        checked: value,
+        value: value || '',
+        checked: value || false,
 
         onChange(event) {
           const originalValue = value;
