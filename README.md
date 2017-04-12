@@ -23,7 +23,19 @@ this.state = {
 };
 ```
 
-In theory, we could then render the guests with a function like this one:
+In theory, we could then add guests to the array with a method like this one:
+
+```js
+addGuest(event) {
+  event.preventDefault();
+
+  this.setState({
+    guests: this.state.guests.concat({ name: 'John Smith' })
+  });
+}
+```
+
+... and render the array with a function like this one:
 
 ```jsx harmony
 function renderGuests() {
@@ -175,18 +187,6 @@ function bindModel(context) {
         </div>
     );
   }
-```
-
-Finally, here's the `addGuest()` method that gets called when a user clicks the button:
-
-```js
-addGuest(event) {
-  event.preventDefault();
-
-  this.setState({
-    guests: this.state.guests.concat({ name: 'John Smith' })
-  });
-}
 ```
 
 This completes our full-featured two-way data binding library for ReactJS. To see the
