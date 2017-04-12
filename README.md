@@ -58,9 +58,9 @@ function renderGuests() {
 
 So what's wrong here? `guests[0].name` will return the first guest from our `state`'s
 `guests` array the first time, but our `model()` function will replace the entire array
-with a single-element array containing only the updated value. Imagine we are in a
-browser Javascript console when the debugger is stopped on a breakpoint, and watch what
-happens:
+with a single-element array containing only the updated value. In other words, imagine we
+are in a browser's Javascript console when the debugger is stopped on a breakpoint, and
+watch what happens:
 
 ```js
 > this.state = { myArray: ['el1', 'el2']};
@@ -87,7 +87,7 @@ a single element! Although not immediately obvious from `renderGuests`' JSX, the
 makes sense when we observe it in action.
 
 To get around this, we need a modified version of the `model()` method that can retrieve
-the array from the state object even if it is nested several layers deep, modify the
+the array from the state object (even if it is nested several layers deep), modify the
 nested property value at the specified array index, and place the entire array back into
 the state object. So the method signature has to look like this:
 
