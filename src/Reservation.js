@@ -36,7 +36,7 @@ class Reservation extends Component {
     if (!isGoing) {
       return 'Not attending';
     } else {
-      return `Attending with ${numberOfGuests} guest${numberOfGuests == 1 ? '' : 's'}`;
+      return `Attending with ${numberOfGuests} guest${numberOfGuests === '1' ? '' : 's'}`;
     }
   }
 
