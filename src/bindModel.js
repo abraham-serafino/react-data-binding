@@ -1,63 +1,22 @@
-import get from 'lodash.get';
-import set from 'lodash.set';
-
 function bindModel(context) {
-  return {
-    model(path) {
-      const value = get(context.state, path, '');
+  return function(model) {
+    return {
+      value: context.state[model],
+      checked: context.state[model],
 
-      return {
-        value,
-        checked: value || false,
+      onChange(event) {
+        const originalValue = context.state[model];
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
 
-        onChange(event) {
-          const originalValue = value;
-          const target = event.target;
-          const newValue = target.type === 'checkbox' ? target.checked : target.value;
+        context.setState({ [model]: value });
 
-          const newState = {};
-          set(newState, path, newValue);
-
-          context.setState(newState);
-
-          if (typeof context.handleChange === 'function') {
-            context.handleChange(path, newValue, originalValue);
-          }
+        if (typeof context.handleChange === 'function') {
+          context.handleChange(model, value, originalValue);
         }
-      };
-    },
-
-    arrayItem(pathToArray, index, arrayElementSubPath) {
-      const stateArray = get(context.state, pathToArray, null) || [];
-      const value = arrayElementSubPath ? get(stateArray[index], arrayElementSubPath, null) : stateArray[index];
-
-      return {
-        value,
-        checked: value,
-
-        onChange(event) {
-          const originalValue = value;
-          const target = event.target;
-          const newValue = target.type === 'checkbox' ? target.checked : target.value;
-
-          if (arrayElementSubPath) {
-            set(stateArray[index], arrayElementSubPath, newValue);
-          } else {
-            stateArray[index] = newValue;
-          }
-
-          const newState = {};
-          set(newState, pathToArray, stateArray);
-
-          context.setState(newState);
-
-          if (typeof context.handleChange === 'function') {
-            context.handleChange(pathToArray, newValue, originalValue, index, arrayElementSubPath);
-          }
-        }
-      };
-    }
-  };
+      }
+    };
+  }
 }
 
 export default bindModel;

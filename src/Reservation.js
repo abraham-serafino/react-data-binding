@@ -7,75 +7,56 @@ class Reservation extends Component {
 
     this.state = {
       isGoing: true,
-      guests: []
+      numberOfGuests: 2
     };
 
-    this.addGuest = this.addGuest.bind(this);
     this.summary = this.summary.bind(this);
-    this.renderGuests = this.renderGuests.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  addGuest(event) {
-    event.preventDefault();
+  handleChange(model, value) {
+    switch (model) {
+      case 'isGoing':
+        if (!value) {
+          this.setState({ numberOfGuests: 0 });
+        }
+        break;
 
-    this.setState({
-      guests: this.state.guests.concat({ name: 'John Smith' })
-    });
+      case 'numberOfGuests':
+        if (value > 0) {
+          this.setState({ isGoing: true });
+        }
+        break;
+    }
   }
 
   summary() {
-    const { isGoing } = this.state;
-
-    const guestNames = this.state.guests.map(guest => guest.name);
-
-    if (guestNames.length > 1) {
-      const lastGuestName = guestNames.length - 1;
-      guestNames[lastGuestName] = `and ${guestNames[lastGuestName]}`;
-    }
-
-    const guestSummary = (guestNames.length > 0 ? 'with ' : '') +
-        (guestNames.length > 2 ? guestNames.join(', ') : guestNames.join(' '));
+    const { isGoing, numberOfGuests } = this.state;
 
     if (!isGoing) {
-      return `Not attending`;
+      return 'Not attending';
     } else {
-      return `Attending ${guestSummary}`;
+      return `Attending with ${numberOfGuests} guest${numberOfGuests == 1 ? '' : 's'}`;
     }
-  }
-
-  renderGuests(arrayItem) {
-    const guests = [];
-
-    for (let i = 0, iLen = this.state.guests.length; i < iLen; ++i) {
-      guests.push(
-          <p key={i}>
-            <label>Guest {i + 1}:&nbsp;</label>
-            <input type="text" {...arrayItem('guests', i, 'name')}
-                   readOnly={!this.state.isGoing} />
-            <br/>
-          </p>
-      );
-    }
-
-    return guests;
   }
 
   render() {
-    const { model, arrayItem } = bindModel(this);
+    const model = bindModel(this);
 
     return (
         <div>
           <form>
             <label>
-              <input type='checkbox' {...model('isGoing')} />
-              Attending&nbsp;
+              <input type="checkbox" {...model("isGoing")} />
+              Attending
             </label>
-
-            <button onClick={this.addGuest}>&nbsp;Add guest</button>
-            { this.renderGuests(arrayItem) }
+            <br />
+            <label>
+              Number of guests:
+              <input type="number" {...model('numberOfGuests')} />
+            </label>
           </form>
-
-          <label>{this.summary()}</label>
+          <label>{this.summary()}.</label>
         </div>
     );
   }
