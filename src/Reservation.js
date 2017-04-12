@@ -28,7 +28,7 @@ class Reservation extends Component {
 
     const guestNames = this.state.guests.map(guest => guest.name);
 
-    if (guestNames.length > 2) {
+    if (guestNames.length > 1) {
       const lastGuestName = guestNames.length - 1;
       guestNames[lastGuestName] = `and ${guestNames[lastGuestName]}`;
     }
