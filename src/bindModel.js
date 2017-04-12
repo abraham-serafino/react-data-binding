@@ -2,8 +2,7 @@ import get from 'lodash.get';
 import set from 'lodash.set';
 
 function bindModel(context) {
-  return {
-    model(path) {
+  return function model(path) {
       const value = get(context.state, path, '');
 
       return {
@@ -18,6 +17,8 @@ function bindModel(context) {
           const newState = {};
           set(newState, path, newValue);
 
+          // remember, we cannot call set() directly on the state object,
+          // because mutating the state object has unexpected results
           context.setState(newState);
 
           if (typeof context.handleChange === 'function') {
@@ -25,39 +26,7 @@ function bindModel(context) {
           }
         }
       };
-    },
-
-    arrayItem(pathToArray, index, arrayElementSubPath) {
-      const stateArray = get(context.state, pathToArray, null) || [];
-      const value = arrayElementSubPath ? get(stateArray[index], arrayElementSubPath, null) : stateArray[index];
-
-      return {
-        value,
-        checked: value,
-
-        onChange(event) {
-          const originalValue = value;
-          const target = event.target;
-          const newValue = target.type === 'checkbox' ? target.checked : target.value;
-
-          if (arrayElementSubPath) {
-            set(stateArray[index], arrayElementSubPath, newValue);
-          } else {
-            stateArray[index] = newValue;
-          }
-
-          const newState = {};
-          set(newState, pathToArray, stateArray);
-
-          context.setState(newState);
-
-          if (typeof context.handleChange === 'function') {
-            context.handleChange(pathToArray, newValue, originalValue, index, arrayElementSubPath);
-          }
-        }
-      };
-    }
-  };
+    };
 }
 
 export default bindModel;
