@@ -7,7 +7,11 @@ class Reservation extends Component {
 
     this.state = {
       isGoing: true,
-      guests: []
+      guests: [],
+      name: {
+        firstName: '',
+        lastName: ''
+      }
     };
 
     this.addGuest = this.addGuest.bind(this);
@@ -19,14 +23,19 @@ class Reservation extends Component {
     event.preventDefault();
 
     this.setState({
-      guests: this.state.guests.concat({ name: 'John Smith' })
+      guests: this.state.guests.concat({
+        firstName: 'John',
+        lastName: 'Smith'
+      })
     });
   }
 
   summary() {
-    const { isGoing } = this.state;
+    const { isGoing, name } = this.state;
+    const { firstName, lastName } = name;
 
-    const guestNames = this.state.guests.map(guest => guest.name);
+    const guestNames = this.state.guests.map(guest =>
+        `${guest.firstName} ${guest.lastName}`);
 
     if (guestNames.length > 1) {
       const lastGuestName = guestNames.length - 1;
@@ -37,9 +46,9 @@ class Reservation extends Component {
         (guestNames.length > 2 ? guestNames.join(', ') : guestNames.join(' '));
 
     if (!isGoing) {
-      return `Not attending`;
+      return `${firstName} ${lastName} is not attending`;
     } else {
-      return `Attending ${guestSummary}`;
+      return `${firstName} ${lastName} is attending ${guestSummary}`;
     }
   }
 
@@ -49,10 +58,13 @@ class Reservation extends Component {
     for (let i = 0, iLen = this.state.guests.length; i < iLen; ++i) {
       guests.push(
           <p key={i}>
-            <label>Guest {i + 1}:&nbsp;</label>
-            <input type="text" {...arrayItem('guests', i, 'name')}
+            <label>Guest {i + 1} (First Name):&nbsp;</label>
+            <input type="text" {...arrayItem('guests', i, 'firstName')}
                    readOnly={!this.state.isGoing} />
             <br/>
+            <label>(Last Name):&nbsp;</label>
+            <input type="text" {...arrayItem('guests', i, 'lastName')}
+                   readOnly={!this.state.isGoing} />
           </p>
       );
     }
@@ -66,6 +78,14 @@ class Reservation extends Component {
     return (
         <div>
           <form>
+            <label>Your first name:&nbsp;</label>
+            <input type="text" {...model('name.firstName')} />
+            <br/>
+            <label>Your last name:&nbsp;</label>
+            <input type="text" {...model('name.lastName')} />
+
+            <br/><br/>
+
             <label>
               <input type='checkbox' {...model('isGoing')} />
               Attending&nbsp;
