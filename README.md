@@ -34,6 +34,7 @@ and `set()` methods:
 ```js
 import get from 'lodash.get';
 import set from 'lodash.set';
+import merge from 'lodash.merge';
 
 function bindModel(context) {
   return function model(path) {
@@ -53,7 +54,7 @@ function bindModel(context) {
 
           // remember, we cannot call set() directly on the state object,
           // because mutating the state object has unexpected results
-          context.setState(newState);
+          context.setState(merge(context.state, newState));
 
           if (typeof context.handleChange === 'function') {
             context.handleChange(path, newValue, originalValue);
