@@ -126,7 +126,7 @@ arrayItem(pathToArray, index, arrayElementSubPath) {
       const newState = {};
       set(newState, pathToArray, stateArray);
 
-      context.setState(newState);
+      context.setState(merge(context.state, newState));
 
       if (typeof context.handleChange === 'function') {
         context.handleChange(pathToArray, index, newValue, originalValue, arrayElementSubPath);

@@ -1,5 +1,6 @@
 import get from 'lodash.get';
 import set from 'lodash.set';
+import merge from 'lodash.merge';
 
 function bindModel(context) {
   return {
@@ -13,12 +14,14 @@ function bindModel(context) {
         onChange(event) {
           const originalValue = value;
           const target = event.target;
-          const newValue = target.type === 'checkbox' ? target.checked : target.value;
+          const newValue = target.type === 'checkbox' ?
+              target.checked :
+              target.value;
 
           const newState = {};
           set(newState, path, newValue);
 
-          context.setState(newState);
+          context.setState(merge(context.state, newState));
 
           if (typeof context.handleChange === 'function') {
             context.handleChange(path, newValue, originalValue);
@@ -51,7 +54,7 @@ function bindModel(context) {
           const newState = {};
           set(newState, pathToArray, stateArray);
 
-          context.setState(newState);
+          context.setState(merge(context.state, newState));
 
           if (typeof context.handleChange === 'function') {
             context.handleChange(pathToArray, newValue, originalValue, index, arrayElementSubPath);
