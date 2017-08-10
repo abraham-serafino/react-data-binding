@@ -19,10 +19,3 @@ Finally, in [Part III,](https://github.com/abraham-serafino/react-data-binding/t
 round out the library with support for arrays _of_ nested objects.
 
 Feel free to contact me with questions at [abraham.serafino@mail.com](mailto:abraham.serafino@mail.com).
-
-
-https://objectpartners.com/2017/04/24/two-way-data-binding-in-reactjs-part-i
-
-https://objectpartners.com/2017/04/26/two-way-data-binding-in-reactjs-part-ii
-
-https://objectpartners.com/2017/04/28/two-way-data-binding-in-reactjs-part-iii
